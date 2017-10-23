@@ -1,13 +1,35 @@
 {
   "manifest_version": 2,
-  "name": "Tab Saver",
+  "name": "Tab_Saver",
   "version": "0.1",
-  "permissions": ["tabs","activeTab"],
+  "description":"Save your current tabs to open another time",
+  "icons":{
+    "128":"icon.ico"
+  },
+
+  "background": {
+    "persistent": false,
+    "scripts": ["background.js"]
+  },
+
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage"
+  ],
+
   "content_scripts": 
   [
 	{
       "matches": [ "<all_urls>" ],
-      "js": ["jquery-1.12.4.min.js","main.js"]
+      "js": ["jquery-1.12.4.min.js","content.js"]
 	}
-  ]
+  ],
+
+  "browser_action": {
+    "default_icon":"icon.ico",
+    "default_popup": "index.html"
+  },
+
+  "content_security_policy":"script-src 'self' https://www.google.com; object-src 'self'"
 }
