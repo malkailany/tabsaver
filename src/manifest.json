@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Tab_Saver",
-  "version": "0.1",
+  "version": "0.2",
   "description":"Save your current tabs to open another time",
   "icons":{
     "128":"icon.ico"
