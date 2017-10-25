@@ -19,12 +19,12 @@ document.addEventListener("DOMContentLoaded", function() {
 });*/
 
 document.addEventListener("DOMContentLoaded", function() {
-
     document.getElementById("savetabs").addEventListener("click", function () {
-        chrome.extension.sendMessage({ action: "saveme"});
+        chrome.extension.sendMessage({ action: "saveme", data: 'peepee'});
+
     });
     document.getElementById("loadtabs").addEventListener("click", function () {
-        chrome.extension.sendMessage({ action: "loadme"});
+        chrome.extension.sendMessage({ action: "loadme", data: 'peepee'});
     });
 });
 
