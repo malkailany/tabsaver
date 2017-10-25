@@ -39,10 +39,10 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse)
 */
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.action) {
-
+        var tabarray = new Array();
 
         function getUrl() {
-             tabarray = new Array();
+
             chrome.windows.getAll({
                 populate: true
             }, function(windows) {
@@ -50,40 +50,46 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
                     window.tabs.forEach(function(tab) {
                         //collect all of the urls here, I will just log them instead
                         tabarray.push(tab.url)
+                        console.log('pusheD?' + tab.url);
                     });
+                    saveUrl(request.data)
                 });
             });
-            chrome.storage.sync.set({newValue: tabarray}, function() {
+
+
+
+        }
+
+        function saveUrl(name) {
+            console.log(tabarray.length)
+            chrome.storage.sync.set({name: tabarray}, function() {
                 // Notify that we saved.
                 console.log('Settings saved');
+
             });
-            console.log(tabarray)
-
+            console.log('beep boop saved as '+ name);
         }
-
-        function saveUrl() {
-            getUrl()
-            console.log('beep boop saved');
-        }
-        function loadUrl() {
+        function loadUrl(name) {
             chrome.storage.sync.get(null, function(items) {
                 var allKeys = Object.keys(items);
                 console.log(allKeys);
             });
-            chrome.storage.sync.get('newValue', function(items) {
+            chrome.storage.sync.get(name.string, function(items) {
 
-                console.log(items.newValue);
+                console.log(items.name);
             });
 
             console.log('beep boop load');
         }
 
         if (request.action == 'saveme') {
-            saveUrl();
+            getUrl()
+            console.log(request.data)
             console.log('YOU HAVE SAVED ME');
         }
         if (request.action == 'loadme') {
-            loadUrl();
+            loadUrl(request.data);
+            console.log(request.data)
             console.log('YOU HAVE loaded ME');
         }
     }

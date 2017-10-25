@@ -17,6 +17,7 @@
     "activeTab",
     "storage"
   ],
+  "options_page": "option.html",
 
   "content_scripts": 
   [
