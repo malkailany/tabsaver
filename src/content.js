@@ -3,7 +3,7 @@ chrome.storage.sync.get(null, function(items) {
     var allKeys = Object.keys(items);
     var select = document.getElementById("loaditem");
     for(var i = 0; i < allKeys.length; i++) {
-        var opt = allKeys[i]
+        var opt = allKeys[i];
         var el = document.createElement("option");
         el.textContent = opt;
         el.value = opt;
@@ -29,8 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     document.getElementById("loadtabs").addEventListener("click", function () {
         var e = document.getElementById("loaditem");
-        var filename = e.options[e.selectedIndex].text
-        alert(filename);
+        var filename = e.options[e.selectedIndex].text;
         chrome.extension.sendMessage({action: "loadme", data: filename});
 
     });

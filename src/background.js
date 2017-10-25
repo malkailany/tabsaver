@@ -36,7 +36,13 @@ chrome.extension.onMessage.addListener(function (request, sender, sendResponse) 
             chrome.storage.sync.get(arrayName, function (items) {
                 console.log('sync: ' + arrayName);
                 console.log(arrayName, items);
-            });
+                console.log(Object.values(items)["0"]);
+                chrome.windows.create({ url: Object.values(items)["0"] }, function(win) {
+                    chrome.windows.update(win.id, { focused: false });
+                });
+            })
+
+
         }
 
 
