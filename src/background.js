@@ -38,11 +38,10 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse)
 });
 */
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+
     if (request.action) {
         var tabarray = new Array();
-
         function getUrl() {
-
             chrome.windows.getAll({
                 populate: true
             }, function(windows) {
@@ -50,47 +49,43 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
                     window.tabs.forEach(function(tab) {
                         //collect all of the urls here, I will just log them instead
                         tabarray.push(tab.url)
-                        console.log('pusheD?' + tab.url);
                     });
-                    saveUrl(request.data)
+
                 });
+                console.log("tabarray should have populated with urls")
+                saveUrl()
             });
-
-
-
         }
 
-        function saveUrl(name) {
-            console.log(tabarray.length)
-            chrome.storage.sync.set({name: tabarray}, function() {
+        function saveUrl() {
+            console.log("array length: " + tabarray.length)
+            var name = request.data
+            var obj= {};
+            obj[name] = tabarray;
+
+            chrome.storage.sync.set(obj, function() {
                 // Notify that we saved.
-                console.log('Settings saved');
+                console.log('Settings saved as ' + obj[name]);
 
             });
-            console.log('beep boop saved as '+ name);
         }
-        function loadUrl(name) {
-            chrome.storage.sync.get(null, function(items) {
-                var allKeys = Object.keys(items);
-                console.log(allKeys);
+        function loadUrl() {
+            arrayName = request.data;
+              chrome.storage.sync.get(arrayName, function(items) {
+                console.log('sync: ' + arrayName);
+                console.log(arrayName, items);
             });
-            chrome.storage.sync.get(name.string, function(items) {
-
-                console.log(items.name);
-            });
-
-            console.log('beep boop load');
         }
+
 
         if (request.action == 'saveme') {
+
+            console.log("You have pressed the save button! Filename is '"+request.data+"'");
             getUrl()
-            console.log(request.data)
-            console.log('YOU HAVE SAVED ME');
         }
         if (request.action == 'loadme') {
+            console.log("You have pressed the load button! Filename is '"+request.data+"'");
             loadUrl(request.data);
-            console.log(request.data)
-            console.log('YOU HAVE loaded ME');
         }
     }
 });

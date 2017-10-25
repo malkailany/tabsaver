@@ -18,15 +18,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });*/
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("savetabs").addEventListener("click", function () {
-        chrome.extension.sendMessage({ action: "saveme", data: 'peepee'});
 
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("savetabs").addEventListener("click", function () {
+            var filename = document.getElementById("filename").value;
+            //alert('second ' + filename)
+            chrome.extension.sendMessage({action: "saveme", data: filename});
+        });
+
+
+        document.getElementById("loadtabs").addEventListener("click", function () {
+            var filename = document.getElementById("filename").value;
+            chrome.extension.sendMessage({action: "loadme", data: filename});
+
+        });
     });
-    document.getElementById("loadtabs").addEventListener("click", function () {
-        chrome.extension.sendMessage({ action: "loadme", data: 'peepee'});
-    });
-});
 
 /*
 chrome.extension.sendMessage({ action: "WhatYouWant"});
