@@ -1,10 +1,11 @@
 {
   "manifest_version": 2,
   "name": "Tab_Saver",
-  "version": "0.2",
+  "version": "1",
   "description":"Save your current tabs to open another time",
   "icons":{
-    "128":"icon.ico"
+    "64":"icon.png"
+
   },
 
   "background": {
@@ -28,7 +29,7 @@
   ],
 
   "browser_action": {
-    "default_icon":"icon.ico",
+    "default_icon":"icon.png",
     "default_popup": "index.html"
   },
 
